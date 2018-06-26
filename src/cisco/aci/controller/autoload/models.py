@@ -1,4 +1,5 @@
 from cloudshell.devices.standards.base import AbstractResource
+from cloudshell.devices.standards.validators import attr_length_validator
 
 
 AVAILABLE_SHELL_TYPES = ["CS_CiscoACIController", "CS_CiscoACITenant", "CS_CiscoACIEndPointGroup"]
@@ -42,6 +43,18 @@ class CiscoACITenant(AbstractResource):
             self.shell_name = ""
             self.shell_type = ""
 
+    @property
+    def aci_name(self):
+        """ Return the name of a contact registered in the device """
+
+        return self.attributes.get("{}ACI Name".format(self.namespace), None)
+
+    @aci_name.setter
+    @attr_length_validator
+    def aci_name(self, value):
+        """ Set the name of a contact registered in the device """
+        self.attributes["{}ACI Name".format(self.namespace)] = value
+
 
 class CiscoACIEndPointGroup(AbstractResource):
     RESOURCE_MODEL = "Cisco ACI EndPointGroup"
@@ -60,3 +73,15 @@ class CiscoACIEndPointGroup(AbstractResource):
         else:
             self.shell_name = ""
             self.shell_type = ""
+
+    @property
+    def aci_name(self):
+        """ Return the name of a contact registered in the device """
+
+        return self.attributes.get("{}ACI Name".format(self.namespace), None)
+
+    @aci_name.setter
+    @attr_length_validator
+    def aci_name(self, value):
+        """ Set the name of a contact registered in the device """
+        self.attributes["{}ACI Name".format(self.namespace)] = value

@@ -70,6 +70,7 @@ class CiscoAciEpgAutoloadDriver(ResourceDriverInterface):
 
             return autoload_details
 
+
 if __name__ == "__main__":
     import mock
     from cloudshell.shell.core.driver_context import ResourceCommandContext, ResourceContextDetails, ReservationContextDetails
@@ -110,4 +111,9 @@ if __name__ == "__main__":
 
         for res in result.resources:
             print res.__dict__
+
+        for attr in result.attributes:
+            print attr.__dict__
+
+
 
