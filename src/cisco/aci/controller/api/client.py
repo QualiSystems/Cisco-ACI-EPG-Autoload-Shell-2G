@@ -14,6 +14,7 @@ class CiscoACIControllerHTTPClient(object):
         """
         full_url = "{}://{}:{}".format(scheme.lower(), address, port)
         self._logger = logger
+        self._logger.info("APIC full URL: {}".format(full_url))
         self._session = aci.Session(url=full_url, uid=user, pwd=password)
         self._login()
 
@@ -37,12 +38,18 @@ class CiscoACIControllerHTTPClient(object):
         """
         tenants_structure = []
         tenants = aci.Tenant.get_deep(self._session)
+        self._logger.info("Tenants info from the APIC: {}".format(tenants))
 
         for tenant in tenants:
+            app_profiles = []
+            tenants_structure.append({
+                "name": tenant.name,
+                "app_profiles": app_profiles
+            })
             for tenant_child in tenant.get_children():
                 if isinstance(tenant_child, aci.AppProfile):
                     epgs = []
-                    tenants_structure.append({
+                    app_profiles.append({
                         "name": tenant_child.name,
                         "epgs": epgs
                     })
@@ -53,4 +60,5 @@ class CiscoACIControllerHTTPClient(object):
                                 "name": app_profile_child.name
                             })
 
+        self._logger.info("Parsed Tenants structure: {}".format(tenants_structure))
         return tenants_structure
