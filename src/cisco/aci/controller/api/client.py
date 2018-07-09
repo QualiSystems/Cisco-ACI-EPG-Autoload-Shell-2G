@@ -29,22 +29,28 @@ class CiscoACIControllerHTTPClient(object):
                                .format(resp.status_code, resp.content))
             raise Exception("Unable to login to the ACI Controller")
 
-    def get_epgs(self):
-        """Get all EndPoint Groups grouped by their tenant
+    def get_tenants_structure(self):
+        """Get all Tenants structure in the next format:
 
-        :return:
+        [{"name": "tenant_1", "app_profiles": [{"name": "app_profile_1", "epgs": [{"name": "EPG_1"}]}]}]
+        :rtype: list[dict]
         """
-        epgs_by_tenant = {}
+        tenants_structure = []
         tenants = aci.Tenant.get_deep(self._session)
 
         for tenant in tenants:
             for tenant_child in tenant.get_children():
                 if isinstance(tenant_child, aci.AppProfile):
+                    epgs = []
+                    tenants_structure.append({
+                        "name": tenant_child.name,
+                        "epgs": epgs
+                    })
+
                     for app_profile_child in tenant_child.get_children():
                         if isinstance(app_profile_child, aci.CommonEPG):
-                            epgs = epgs_by_tenant.setdefault(tenant.name, [])
                             epgs.append({
                                 "name": app_profile_child.name
                             })
 
-        return epgs_by_tenant
+        return tenants_structure

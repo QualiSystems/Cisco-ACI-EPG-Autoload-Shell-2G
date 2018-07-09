@@ -24,32 +24,45 @@ class CiscoACIAutoloadFlow(object):
                                                      name="Cisco ACI EPG Controller",
                                                      unique_id=self._resource_config.fullname)
 
-        epgs_by_tenant = self._aci_api_client.get_epgs()
-
+        tenants_structure = self._aci_api_client.get_tenants_structure()
         tenant_name_gen = UniqueNameGenerator()
 
-        for tenant_idx, (tenant, epgs) in enumerate(epgs_by_tenant.iteritems(), start=1):
-            tenant_name = tenant_name_gen.get_unique_name(tenant)
+        for tenant in tenants_structure:
+            unique_tenant_name = tenant_name_gen.get_unique_name(tenant["name"])
             tenant_resource = models.CiscoACITenant(shell_name=self._resource_config.shell_name,
-                                                    name=tenant_name,
+                                                    name=unique_tenant_name,
                                                     unique_id="{}.{}".format(self._resource_config.fullname,
-                                                                             tenant_name))
-            tenant_resource.aci_name = tenant
-            root_resource.add_sub_resource(tenant_idx, tenant_resource)
+                                                                             unique_tenant_name))
+            tenant_resource.aci_name = tenant["name"]
+            root_resource.add_sub_resource(hash(unique_tenant_name), tenant_resource)
 
-            epg_name_gen = UniqueNameGenerator()
+            app_profile_name_gen = UniqueNameGenerator()
 
-            for epg_idx, epg in enumerate(epgs, start=1):
-                epg_name = epg_name_gen.get_unique_name(epg["name"])
-                epg_resource = models.CiscoACIEndPointGroup(shell_name=self._resource_config.shell_name,
-                                                            name=epg_name,
-                                                            unique_id="{}.{}.{}".format(
-                                                                self._resource_config.fullname,
-                                                                tenant_name,
-                                                                epg_name))
+            for app_profile in tenant["app_profiles"]:
+                unique_app_profile_name = app_profile_name_gen.get_unique_name(app_profile["name"])
+                app_profile_resource = models.CiscoACIAppProfile(shell_name=self._resource_config.shell_name,
+                                                                 name=unique_app_profile_name,
+                                                                 unique_id="{}.{}.{}"
+                                                                 .format(self._resource_config.fullname,
+                                                                         unique_tenant_name,
+                                                                         unique_app_profile_name))
+                app_profile_resource.aci_name = app_profile["name"]
+                tenant_resource.add_sub_resource(hash(unique_app_profile_name), app_profile_resource)
 
-                epg_resource.aci_name = epg["name"]
-                tenant_resource.add_sub_resource(epg_idx, epg_resource)
+                epg_name_gen = UniqueNameGenerator()
+
+                for epg in app_profile["epgs"]:
+                    unique_epg_name = epg_name_gen.get_unique_name(epg["name"])
+                    epg_resource = models.CiscoACIEndPointGroup(shell_name=self._resource_config.shell_name,
+                                                                name=unique_epg_name,
+                                                                unique_id="{}.{}.{}.{}".format(
+                                                                    self._resource_config.fullname,
+                                                                    unique_tenant_name,
+                                                                    unique_app_profile_name,
+                                                                    unique_epg_name))
+
+                    epg_resource.aci_name = epg["name"]
+                    app_profile_resource.add_sub_resource(hash(unique_epg_name), epg_resource)
 
         return AutoloadDetailsBuilder(root_resource).autoload_details()
 
