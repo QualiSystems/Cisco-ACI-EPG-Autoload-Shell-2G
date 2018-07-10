@@ -1,6 +1,6 @@
 from cloudshell.devices.runners.autoload_runner import AutoloadRunner
 
-from cisco.aci.controller.flows.autoload import CiscoACIAutoloadFlow
+from cisco.aci.logical.flows.autoload import CiscoACIAutoloadFlow
 
 
 class CiscoACIAutoloadRunner(AutoloadRunner):

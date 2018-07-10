@@ -1,12 +1,12 @@
 from cloudshell.core.context.error_handling_context import ErrorHandlingContext
-from cloudshell.shell.core.driver_utils import GlobalLock
-from cloudshell.shell.core.resource_driver_interface import ResourceDriverInterface
 from cloudshell.devices.driver_helper import get_api
 from cloudshell.devices.driver_helper import get_logger_with_thread_id
+from cloudshell.shell.core.driver_utils import GlobalLock
+from cloudshell.shell.core.resource_driver_interface import ResourceDriverInterface
 
 from cisco.aci.controller.api.client import CiscoACIControllerHTTPClient
-from cisco.aci.controller.configuration_attributes_structure import CiscoACIControllerResourse
-from cisco.aci.controller.runners.autoload import CiscoACIAutoloadRunner
+from cisco.aci.logical.configuration_attributes_structure import CiscoACIControllerResourse
+from cisco.aci.logical.runners.autoload import CiscoACIAutoloadRunner
 
 
 class CiscoAciEpgAutoloadDriver(ResourceDriverInterface):

@@ -1,6 +1,6 @@
 from cloudshell.devices.autoload.autoload_builder import AutoloadDetailsBuilder
 
-from cisco.aci.controller.autoload import models
+from cisco.aci.logical.autoload import models
 
 
 class CiscoACIAutoloadFlow(object):
