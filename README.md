@@ -31,15 +31,15 @@ ___
 ### Shell comprises:
 |File name|Description|
 |---|---|
-|`Cisco ACI EPG Autoload Shell 2G.zip`|Cisco ACI EPG Autoload Shell 2nd Generation|
-|`cisco-aci-epg-autoload-offline-dependecies.zip`|Shell Python dependecies (for offline installation only)|
+|`Cisco ACI EPG Autoload Shell 2G.zip`|`Cisco ACI EPG Autoload Shell 2nd Generation`|
+|`cisco-aci-epg-autoload-offline-dependecies.zip`|`Shell Python dependecies (for offline installation only)`|
 
 ### Automation
 This section describes the automation (drivers or scripts) associated with the data model. The automation code (either script or driver) is associated with the model and provided as part of the Shell package (in the .zip file). The following commands are associated with a model inside the Shell:
 
 |Command |Description|
 |---|---|
-|`Autoload`|Discovers ACI Structure. Add Tenants, Application Profiles and EndPoint Groups to the resource model|
+|`Autoload`|`Discovers ACI Structure. Add Tenants, Application Profiles and EndPoint Groups to the resource model`|
 
 ## Import and Configure Shell
 This section describes how to import, configure and modify Cisco ACI EPG Autoload Shell 2G
@@ -65,10 +65,10 @@ Cisco ACI EPG Autoload Shell 2G uses a variety of Python packages. To work in of
 
 ### Data Model
 Cisco ACI EPG Autoload Shell 2G Families and Models
+
 |Family |Model|
 |---|---|
-|`CS_CiscoACIController`|Cisco ACI EPG Controller|
-|`CS_CiscoACITenant`|Cisco ACI EPG Controller.CiscoACITenant|
-|`CS_CiscoACIAppProfile`|Cisco ACI EPG Controller.CiscoACIAppProfile|
-|`CS_CiscoACIEndPointGroup`|Cisco ACI EPG Controller.CiscoACIEndPointGroup|
-
+|`CS_CiscoACIController`|`Cisco ACI EPG Controller`|
+|`CS_CiscoACITenant`|`Cisco ACI EPG Controller.CiscoACITenant`|
+|`CS_CiscoACIAppProfile`|`Cisco ACI EPG Controller.CiscoACIAppProfile`|
+|`CS_CiscoACIEndPointGroup`|`Cisco ACI EPG Controller.CiscoACIEndPointGroup`|
