@@ -1,5 +1,16 @@
 <Driver Description="Describe the purpose of your CloudShell shell" MainClass="driver.CiscoAciEpgAutoloadDriver" Name="CiscoAciEpgAutoloadDriver" Version="1.0.0">
     <Layout>
-        <Category Name="Hidden Commands"></Category>
+        <Category Name="Create Commands">
+          <Command Name="create_aci_resources" DisplayName="Create ACI Resources">
+              <Parameters>
+                  <Parameter DisplayName="Tenant Name" Name="tenant_name" Type="String" Mandatory="True" DefaultValue="" Description=""/>
+                  <Parameter DisplayName="Application Profile Name" Name="app_profile_name" Type="String" Mandatory="True" DefaultValue="" Description=""/>
+                  <Parameter DisplayName="EndPoint Group Name" Name="epg_name" Type="String" Mandatory="True" DefaultValue="" Description=""/>
+                  <Parameter DisplayName="Bridge Domain Name" Name="bd_name" Type="String" Mandatory="True" DefaultValue="" Description=""/>
+                  <Parameter DisplayName="Bridge Domain IP Address" Name="bd_ip_address" Type="String" DefaultValue="" Description=""/>
+                  <Parameter DisplayName="Bridge Domain Mask" Name="bd_mask" Type="String" DefaultValue="" Description=""/>
+              </Parameters>
+          </Command>
+        </Category>
     </Layout>
 </Driver>

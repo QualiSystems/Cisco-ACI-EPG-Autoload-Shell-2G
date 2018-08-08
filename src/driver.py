@@ -70,17 +70,65 @@ class CiscoAciEpgAutoloadDriver(ResourceDriverInterface):
 
             return autoload_details
 
+    @GlobalLock.lock
+    def create_aci_resources(self, context, tenant_name, app_profile_name, epg_name, bd_name, bd_ip_address, bd_mask):
+        """
+
+        :param context:
+        :param tenant_name:
+        :param app_profile_name:
+        :param epg_name:
+        :param bd_name:
+        :param bd_ip_address:
+        :param bd_mask:
+        :return:
+        """
+
+        logger = get_logger_with_thread_id(context)
+        logger.info("Create ACI Resources command started")
+
+        with ErrorHandlingContext(logger):
+            resource_config = CiscoACIControllerResourse.from_context(context=context,
+                                                                      shell_type=self.SHELL_TYPE,
+                                                                      shell_name=self.SHELL_NAME)
+
+            cs_api = get_api(context)
+            password = cs_api.DecryptPassword(resource_config.password).Value
+
+            aci_api_client = CiscoACIControllerHTTPClient(logger=logger,
+                                                          address=resource_config.address,
+                                                          user=resource_config.user,
+                                                          password=password,
+                                                          scheme=resource_config.scheme,
+                                                          port=resource_config.port)
+
+            aci_api_client.create_aci_resources(tenant_name=tenant_name,
+                                                app_profile_name=app_profile_name,
+                                                epg_name=epg_name,
+                                                bd_name=bd_name,
+                                                bd_ip_address=bd_ip_address,
+                                                bd_mask=bd_mask)
+
+            logger.info("Create ACI Resources command completed")
 
 if __name__ == "__main__":
     import mock
     from cloudshell.shell.core.driver_context import ResourceCommandContext, ResourceContextDetails, ReservationContextDetails
 
+    # TEST ENV
     address = "sandboxapicdc.cisco.com"
-
     user = "admin"
     password = "ciscopsdt"
     port = 443
     scheme = "https"
+
+    # PROD ENV
+    # address = "192.168.85.28"
+    # user = "aci-dev-cali"
+    # password = "Cisco.123!"
+    # port = 8888
+    # scheme = "https"
+
     auth_key = 'h8WRxvHoWkmH8rLQz+Z/pg=='
     api_port = 8029
 
@@ -92,13 +140,13 @@ if __name__ == "__main__":
     context.reservation.reservation_id = '0cc17f8c-75ba-495f-aeb5-df5f0f9a0e97'
     context.resource.attributes = {}
     context.resource.attributes['{}.Scheme'.format(CiscoAciEpgAutoloadDriver.SHELL_NAME)] = "HTTPS"
-    context.resource.attributes['{}.Controller TCP Port'.format(CiscoAciEpgAutoloadDriver.SHELL_NAME)] = 443
+    context.resource.attributes['{}.Controller TCP Port'.format(CiscoAciEpgAutoloadDriver.SHELL_NAME)] = port
     context.resource.attributes['{}.User'.format(CiscoAciEpgAutoloadDriver.SHELL_NAME)] = user
     context.resource.attributes['{}.Password'.format(CiscoAciEpgAutoloadDriver.SHELL_NAME)] = password
     context.resource.address = address
 
     context.connectivity = mock.MagicMock()
-    context.connectivity.server_address = "192.168.85.23"
+    context.connectivity.server_address = "192.168.85.28"
 
     dr = CiscoAciEpgAutoloadDriver()
     dr.initialize(context)
@@ -107,13 +155,15 @@ if __name__ == "__main__":
         get_api.return_value = type('api', (object,), {
             'DecryptPassword': lambda self, pw: type('Password', (object,), {'Value': pw})()})()
 
-        result = dr.get_inventory(context)
+        result = dr.create_aci_resources(context=context,
+                                         tenant_name="tenant_test_1",
+                                         app_profile_name="app_profile_2",
+                                         epg_name="epg_2",
+                                         bd_name="bd_2",
+                                         bd_ip_address="40.40.10.10",
+                                         bd_mask="24")
+
+        result = dr.get_inventory(context=context)
 
         for res in result.resources:
             print res.__dict__
-
-        for attr in result.attributes:
-            print attr.__dict__
-
-
-
