@@ -91,7 +91,6 @@ class CiscoAciEpgAutoloadDriver(ResourceDriverInterface):
             resource_config = CiscoACIControllerResourse.from_context(context=context,
                                                                       shell_type=self.SHELL_TYPE,
                                                                       shell_name=self.SHELL_NAME)
-
             cs_api = get_api(context)
             password = cs_api.DecryptPassword(resource_config.password).Value
 
@@ -110,6 +109,10 @@ class CiscoAciEpgAutoloadDriver(ResourceDriverInterface):
                                                 bd_mask=bd_mask)
 
             logger.info("Create ACI Resources command completed")
+            logger.info("Executing Autoload to add new resources")
+            cs_api.AutoLoad(resource_config.fullname)
+            logger.info("Autoload for new resources completed")
+
 
 if __name__ == "__main__":
     import mock
@@ -134,8 +137,8 @@ if __name__ == "__main__":
 
     context = ResourceCommandContext(*(None, ) * 4)
     context.resource = ResourceContextDetails(*(None, ) * 13)
-    context.resource.name = 'tvm_m_2_fec7-7c42'
-    context.resource.fullname = 'tvm_m_2_fec7-7c42'
+    context.resource.name = 'Cisco ACI EPG Structure'
+    context.resource.fullname = 'Cisco ACI EPG Structure'
     context.reservation = ReservationContextDetails(*(None, ) * 7)
     context.reservation.reservation_id = '0cc17f8c-75ba-495f-aeb5-df5f0f9a0e97'
     context.resource.attributes = {}
@@ -151,19 +154,19 @@ if __name__ == "__main__":
     dr = CiscoAciEpgAutoloadDriver()
     dr.initialize(context)
 
-    with mock.patch('__main__.get_api') as get_api:
-        get_api.return_value = type('api', (object,), {
-            'DecryptPassword': lambda self, pw: type('Password', (object,), {'Value': pw})()})()
+    # with mock.patch('__main__.get_api') as get_api:
+    #     get_api.return_value = type('api', (object,), {
+    #         'DecryptPassword': lambda self, pw: type('Password', (object,), {'Value': pw})()})()
 
-        result = dr.create_aci_resources(context=context,
-                                         tenant_name="tenant_test_1",
-                                         app_profile_name="app_profile_2",
-                                         epg_name="epg_2",
-                                         bd_name="bd_2",
-                                         bd_ip_address="40.40.10.10",
-                                         bd_mask="24")
+    result = dr.create_aci_resources(context=context,
+                                     tenant_name="Heroes",
+                                     app_profile_name="app_profile_2",
+                                     epg_name="epg_2",
+                                     bd_name="bd_2",
+                                     bd_ip_address="40.40.10.10",
+                                     bd_mask="24")
 
-        result = dr.get_inventory(context=context)
+    # result = dr.get_inventory(context=context)
 
-        for res in result.resources:
-            print res.__dict__
+    for res in result.resources:
+        print res.__dict__

@@ -17,6 +17,8 @@ node_types:
   vendor.Cisco ACI EPG Controller:
     derived_from: cloudshell.nodes.CiscoACIController
     capabilities:
+      concurrent_execution:
+        type: cloudshell.capabilities.SupportConcurrentCommands
       auto_discovery_capability:
         type: cloudshell.capabilities.AutoDiscovery
         properties:
