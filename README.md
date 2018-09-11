@@ -21,7 +21,7 @@ Cisco ACI EPG Autoload Shell 2G is based on the Cloudshell Cisco ACI Standard 1.
 ▪ Cisco ACI version 3.0
 
 ### Downloading the Shell
-The VyOS Deployment App Shell 2G is available on the [Quali Download Center](https://support.quali.com/entries/87063688-Solution-Pack-Download-Center).
+Cisco ACI EPG Autoload Shell 2G is available on the [Quali Download Center](https://support.quali.com/entries/87063688-Solution-Pack-Download-Center).
 Download the files into a temporary location on your local machine.
 ___
 **Note:** Registration to the Quali Support Portal is required. If you have not registered,
