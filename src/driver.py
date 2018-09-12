@@ -4,8 +4,9 @@ from cloudshell.devices.driver_helper import get_logger_with_thread_id
 from cloudshell.shell.core.driver_utils import GlobalLock
 from cloudshell.shell.core.resource_driver_interface import ResourceDriverInterface
 
-from cisco.aci.controller.api.client import CiscoACIControllerHTTPClient
-from cisco.aci.logical.configuration_attributes_structure import CiscoACIControllerResourse
+from cloudshell.cisco.aci.controller.api.client import CiscoACIControllerHTTPClient
+
+from cloudshell.cisco.aci.controller.configuration_attributes_structure import CiscoACIControllerResourse
 from cisco.aci.logical.runners.autoload import CiscoACIAutoloadRunner
 
 
