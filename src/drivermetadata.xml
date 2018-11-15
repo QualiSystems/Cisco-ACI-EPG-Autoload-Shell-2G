@@ -11,6 +11,7 @@
                   <Parameter DisplayName="Bridge Domain Mask" Name="bd_mask" Type="String" DefaultValue="" Description=""/>
               </Parameters>
           </Command>
+          <Command Name="remove_aci_resources" DisplayName="Remove ACI Resources"></Command>
         </Category>
     </Layout>
 </Driver>
