@@ -7,6 +7,7 @@ from cloudshell.shell.core.resource_driver_interface import ResourceDriverInterf
 from cloudshell.cisco.aci.controller.api.client import CiscoACIControllerHTTPClient
 
 from cloudshell.cisco.aci.controller.configuration_attributes_structure import CiscoACIControllerResourse
+from cisco.aci.logical.runners.aci_resources import CiscoACIResourcesRunner
 from cisco.aci.logical.runners.autoload import CiscoACIAutoloadRunner
 
 
@@ -102,17 +103,51 @@ class CiscoAciEpgAutoloadDriver(ResourceDriverInterface):
                                                           scheme=resource_config.scheme,
                                                           port=resource_config.port)
 
-            aci_api_client.create_aci_resources(tenant_name=tenant_name,
-                                                app_profile_name=app_profile_name,
-                                                epg_name=epg_name,
-                                                bd_name=bd_name,
-                                                bd_ip_address=bd_ip_address,
-                                                bd_mask=bd_mask)
+            aci_resources_runner = CiscoACIResourcesRunner(aci_api_client=aci_api_client,
+                                                           logger=logger,
+                                                           resource_config=resource_config)
+
+            aci_resources_runner.create_resources(tenant_name=tenant_name,
+                                                  app_profile_name=app_profile_name,
+                                                  epg_name=epg_name,
+                                                  bd_name=bd_name,
+                                                  bd_ip_address=bd_ip_address,
+                                                  bd_mask=bd_mask)
 
             logger.info("Create ACI Resources command completed")
             logger.info("Executing Autoload to add new resources")
             cs_api.AutoLoad(resource_config.fullname)
             logger.info("Autoload for new resources completed")
+
+    @GlobalLock.lock
+    def remove_aci_resources(self, context):
+        """
+
+        :param context:
+        :return:
+        """
+        logger = get_logger_with_thread_id(context)
+        logger.info("Create ACI Resources command started")
+
+        with ErrorHandlingContext(logger):
+            resource_config = CiscoACIControllerResourse.from_context(context=context,
+                                                                      shell_type=self.SHELL_TYPE,
+                                                                      shell_name=self.SHELL_NAME)
+            cs_api = get_api(context)
+            password = cs_api.DecryptPassword(resource_config.password).Value
+
+            aci_api_client = CiscoACIControllerHTTPClient(logger=logger,
+                                                          address=resource_config.address,
+                                                          user=resource_config.user,
+                                                          password=password,
+                                                          scheme=resource_config.scheme,
+                                                          port=resource_config.port)
+
+            aci_resources_runner = CiscoACIResourcesRunner(aci_api_client=aci_api_client,
+                                                           logger=logger,
+                                                           resource_config=resource_config)
+
+            aci_resources_runner.remove_resources()
 
 
 if __name__ == "__main__":
@@ -155,19 +190,20 @@ if __name__ == "__main__":
     dr = CiscoAciEpgAutoloadDriver()
     dr.initialize(context)
 
-    # with mock.patch('__main__.get_api') as get_api:
-    #     get_api.return_value = type('api', (object,), {
-    #         'DecryptPassword': lambda self, pw: type('Password', (object,), {'Value': pw})()})()
+    with mock.patch('__main__.get_api') as get_api:
+        get_api.return_value = type('api', (object,), {
+            'DecryptPassword': lambda self, pw: type('Password', (object,), {'Value': pw})(),
+            'AutoLoad': lambda self, pw: type('Password', (object,), {'Value': pw})()
+        })()
 
-    result = dr.create_aci_resources(context=context,
-                                     tenant_name="Heroes",
-                                     app_profile_name="app_profile_2",
-                                     epg_name="epg_2",
-                                     bd_name="bd_2",
-                                     bd_ip_address="40.40.10.10",
-                                     bd_mask="24")
+        # result = dr.create_aci_resources(context=context,
+        #                                  tenant_name="Heroes",
+        #                                  app_profile_name="App_Profile_222",
+        #                                  epg_name="epg_2",
+        #                                  bd_name="bd_22222",
+        #                                  bd_ip_address="40.40.10.10",
+        #                                  bd_mask="24")
+        #
+        result = dr.remove_aci_resources(context=context)
 
-    # result = dr.get_inventory(context=context)
-
-    for res in result.resources:
-        print res.__dict__
+        print result
