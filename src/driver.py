@@ -95,6 +95,7 @@ class CiscoAciEpgAutoloadDriver(ResourceDriverInterface):
                                                                       shell_name=self.SHELL_NAME)
             cs_api = get_api(context)
             password = cs_api.DecryptPassword(resource_config.password).Value
+            reservation_id = context.reservation.reservation_id
 
             aci_api_client = CiscoACIControllerHTTPClient(logger=logger,
                                                           address=resource_config.address,
@@ -104,8 +105,9 @@ class CiscoAciEpgAutoloadDriver(ResourceDriverInterface):
                                                           port=resource_config.port)
 
             aci_resources_runner = CiscoACIResourcesRunner(aci_api_client=aci_api_client,
-                                                           logger=logger,
-                                                           resource_config=resource_config)
+                                                           resource_config=resource_config,
+                                                           reservation_id=reservation_id,
+                                                           logger=logger)
 
             aci_resources_runner.create_resources(tenant_name=tenant_name,
                                                   app_profile_name=app_profile_name,
@@ -135,6 +137,7 @@ class CiscoAciEpgAutoloadDriver(ResourceDriverInterface):
                                                                       shell_name=self.SHELL_NAME)
             cs_api = get_api(context)
             password = cs_api.DecryptPassword(resource_config.password).Value
+            reservation_id = context.reservation.reservation_id
 
             aci_api_client = CiscoACIControllerHTTPClient(logger=logger,
                                                           address=resource_config.address,
@@ -144,8 +147,9 @@ class CiscoAciEpgAutoloadDriver(ResourceDriverInterface):
                                                           port=resource_config.port)
 
             aci_resources_runner = CiscoACIResourcesRunner(aci_api_client=aci_api_client,
-                                                           logger=logger,
-                                                           resource_config=resource_config)
+                                                           resource_config=resource_config,
+                                                           reservation_id=reservation_id,
+                                                           logger=logger)
 
             aci_resources_runner.remove_resources()
 
@@ -203,7 +207,7 @@ if __name__ == "__main__":
         #                                  bd_name="bd_22222",
         #                                  bd_ip_address="40.40.10.10",
         #                                  bd_mask="24")
-        #
+
         result = dr.remove_aci_resources(context=context)
 
         print result
