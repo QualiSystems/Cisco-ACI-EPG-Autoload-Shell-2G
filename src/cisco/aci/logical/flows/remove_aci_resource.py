@@ -23,7 +23,7 @@ class CiscoACIRemoveResourcesFlow(object):
             for tenant_name, app_profile in resources_data_handler.app_profiles_by_tenants:
                 self._logger.info("Removing App Profile '{}'...".format(app_profile))
                 try:
-                    self._aci_api_client.remove_app_profile(tenant_name="", app_profile_name=app_profile)
+                    self._aci_api_client.remove_app_profile(tenant_name=tenant_name, app_profile_name=app_profile)
                 except Exception:  # todo: catch specific API Client exception
                     self._logger.warning("Unable to remove Application Profile '{}' due to exception:"
                                          .format(app_profile), exc_info=True)
@@ -31,7 +31,7 @@ class CiscoACIRemoveResourcesFlow(object):
             for tenant_name, bd_name in resources_data_handler.bridge_domains_by_tenants:
                 self._logger.info("Removing Bridge Domain '{}'...".format(bd_name))
                 try:
-                    self._aci_api_client.remove_bridge_domain(tenant_name="", bd_name=bd_name)
+                    self._aci_api_client.remove_bridge_domain(tenant_name=tenant_name, bd_name=bd_name)
                 except Exception:  # todo: catch specific API Client exception
                     self._logger.warning("Unable to remove Bridge Domain '{}' due to exception:"
                                          .format(bd_name), exc_info=True)
