@@ -40,7 +40,8 @@ This section describes the automation (drivers or scripts) associated with the d
 |Command |Description|
 |---|---|
 |`Autoload`|`Discovers ACI Structure. Add Tenants, Application Profiles and EndPoint Groups to the resource model`|
-|`Create ACI Resources`|`Creates ACI Application Profile and Endpoint Group under specific Tenant. Add them to the discovered resource model`|
+|`Create ACI Resources`|`Creates ACI Application Profile, Endpoint Group and Bridge Domain under specific Tenant. Add them to the discovered resource model`|
+|`Remove ACI Resources`|`Removes all Application Profiles, Endpoint Groups and Bridge Domains created in the current reservation`|
 
 ## Import and Configure Shell
 This section describes how to import, configure and modify Cisco ACI EPG Autoload Shell 2G
