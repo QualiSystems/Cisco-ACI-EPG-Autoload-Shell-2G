@@ -53,8 +53,8 @@ The Cisco ACI EPG families and models are listed in the following table:
 
 |Family|Model|Description|
 |:---|:---|:---|
-|CS_CiscoACIController|Cisco ACI EPG Controller|Generic Cisco ACI EPG 2 Generation |
-|CS_CiscoACITenant|CiscoACITenant|Tenats added to the controller|
+|CS_CiscoACIController|Cisco ACI EPG Controller|Generic Cisco ACI EPG Controller 2 Generation |
+|CS_CiscoACITenant|CiscoACITenant|Tenats created on the Controller|
 |CS_CiscoACIAppProfile|CiscoACIAppProfile|Application Profiles creatred in Tenants|
 |CS_CiscoACIEndPointGroup|CiscoACIEndPointGroup|EndPoint Groups created in Application Profiles |
 
@@ -201,5 +201,5 @@ To connect with Quali users and experts from around the world, ask questions and
 
 # Release Notes 
 
-For release updates, see the shell's [GitHub releases page](https://github.com/QualiSystems/TeraVM-Controller-Shell-2G/releases).
+For release updates, see the shell's [GitHub releases page](https://github.com/QualiSystems/Cisco-ACI-EPG-Autoload-Shell-2G/releases).
 
