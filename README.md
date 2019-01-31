@@ -188,7 +188,52 @@ In online mode, the execution server automatically downloads and extracts the ap
 * If there is a live instance of the shell's driver or script, terminate the shell’s instance, as explained [here](http://help.quali.com/Online%20Help/9.0/Portal/Content/CSP/MNG/Mng-Exctn-Srv-Exct.htm#Terminat). If an instance does not exist, the execution server will download the Python dependencies the next time a command of the driver or script runs.
 
 # Typical Workflows 
-TBD
+
+#### **Workflow 1** - *Create ACI Resources* 
+1. In CloudShell Portal, add the **Cisco ACI EPG Autoload** resource to your blueprint and reserve the blueprint.
+
+2. Run the **Create ACI Resources** resource command.
+
+3. In the command inputs field, enter the following information:
+	* **Tenant Name**: Name of the Tenant where ACI resources will be created.
+	* **Application Profile Name**: Name of the Application Profile that will be created on the Cisco ACI Controller.
+	* **EndPoint Group Name**: Name of the EndPoint Group that will be created on the Cisco ACI Controller.
+	* **Bridge Domain Name**: Name of the Bridge Domain that will be created on the Cisco ACI Controller.
+	* **Bridge Domain IP Address**: IP Address that will be added to Bridge Domain.
+	* **Bridge Domain Mask**: Subnet Mask that will be added to Bridge Domain..
+	
+4. Click **Run**.
+
+#### **Workflow 2** - *Remove ACI Resources* 
+1. In CloudShell Portal, add the **Cisco ACI EPG Autoload** resource to your blueprint and reserve the blueprint.
+
+2. Run the **Resource ACI Resources** resource command.
+
+Command will remove all ACI resources created earlier in the current reservation
+
+#### **Workflow 3** - *Add Cisco ACI Port to the EndPointGroup*
+1. Create physical connection between Cisco ACI Port and some DUT/Switch  
+    1. In Resource Manager, open the **Cisco ACI Ports Autoload** resource in the **Resource Explorer** tab
+    1. Open **Configuration** menu and click on the **Connections** tab 
+    2. Connect Cisco ACI Port to some DUT/Switch [connection image]:
+    3. Save changes
+
+2. In CloudShell Portal, add the **Cisco ACI EPG Autoload** and DUT/Switch (where you connected Cisco ACI Ports) resources to your blueprint.
+
+3. In the blueprint toolbar, click App/Service>Networking and drag the VLAN AUTO service into the diagram.
+
+[reservation image with 3 resources]
+
+4. Create a connector between DUT/Switch port (which was connected earlier to the Cisco ACI Port) and Cisco ACI EPG Autoload resource.
+[connetcot image 1]
+
+5. Create a connector between DUT/Switch port and VLAN AUTO Service.
+[connetcot image 2]
+
+[image with 2 connectors]
+
+4. Reserve the blueprint.
+
 
 # References
 To download and share integrations, see [Quali Community's Integrations](https://community.quali.com/integrations). 
