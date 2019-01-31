@@ -1,76 +1,205 @@
-# Cisco ACI EPG Autoload Shell 2-nd Generation
-<p align="center">
-<img src="https://github.com/QualiSystems/devguide_source/raw/master/logo.png"></img>
-</p>
+![](https://github.com/QualiSystems/cloudshell-shells-documentaion-templates/blob/master/cloudshell_logo.png)
 
-## Overview
-Shell implements integration of a device model, application or other technology with CloudShell. A shell consists of a data-model that defines how the device and its properties are modeled in CloudShell along with an automation that enables interaction with the device via CloudShell
+# **Cisco ACI EPG Autoload 2G Shell**
 
-### About Cisco ACI EPG Autoload Shell
-Cisco ACI EPG Autoload Shell 2G provides data model and autoload
-functionality
+Release date: January 2019
+
+Shell version: 1.0.0
+
+Document version: 1.0
+
+# In This Guide
+
+* [Overview](#overview)
+* [Downloading the Shell](#downloading-the-shell)
+* [Importing and Configuring the Shell](#importing-and-configuring-the-shell)
+* [Updating Python Dependencies for Shells](#updating-python-dependencies-for-shells)
+* [Typical Workflows](#typical-workflows)
+* [References](#references)
+* [Release Notes](#release-notes)
+
+
+# Overview
+A shell integrates a device model, application or other technology with CloudShell. A shell consists of a data model that defines how the device and its properties are modeled in CloudShell, along with automation that enables interaction with the device via CloudShell.
+
+### Networking Shells
+CloudShell's networking shells provide L2 or L3 connectivity between resources.
+
+### **Cisco ACI EPG Autoload 2G Shell**
+The **Cisco ACI EPG Autoload 2G** shell provides you with connectivity and management capabilities such as device structure discovery for the **Cisco ACI**. 
+
+For more information on the **Cisco ACI**, see the official **Cisco** product documentation.
 
 ### Standard version
-Cisco ACI EPG Autoload Shell 2G is based on the Cloudshell Cisco ACI Standard 1.0.0
-
-### Supported ACI versions
-▪ 3.0
+**Cisco ACI EPG Autoload 2G Shell** is based on the Cloudshell Cisco ACI Standard version **1.0.0**.
 
 ### Requirements
-▪ CloudShell version 8.2 and above
-▪ Cisco ACI version 3.0
 
-### Downloading the Shell
-Cisco ACI EPG Autoload Shell 2G is available on the [Quali Download Center](https://support.quali.com/entries/87063688-Solution-Pack-Download-Center).
-Download the files into a temporary location on your local machine.
-___
-**Note:** Registration to the Quali Support Portal is required. If you have not registered,
-click this link to register [New registration](http://portal.qualisystems.com/entries/43187197)
-___
+Release: **Cisco ACI EPG Autoload 2G Shell**
 
-### Shell comprises:
-|File name|Description|
-|---|---|
-|`Cisco ACI EPG Autoload Shell 2G.zip`|`Cisco ACI EPG Autoload Shell 2nd Generation`|
-|`cisco-aci-epg-autoload-offline-dependecies.zip`|`Shell Python dependecies (for offline installation only)`|
+▪ CloudShell version: 8.0 and above
 
-### Automation
-This section describes the automation (drivers or scripts) associated with the data model. The automation code (either script or driver) is associated with the model and provided as part of the Shell package (in the .zip file). The following commands are associated with a model inside the Shell:
+▪ Cisco ACI version: 3.0 and above
 
-|Command |Description|
-|---|---|
-|`Autoload`|`Discovers ACI Structure. Add Tenants, Application Profiles and EndPoint Groups to the resource model`|
-|`Create ACI Resources`|`Creates ACI Application Profile, Endpoint Group and Bridge Domain under specific Tenant. Add them to the discovered resource model`|
-|`Remove ACI Resources`|`Removes all Application Profiles, Endpoint Groups and Bridge Domains created in the current reservation`|
-
-## Import and Configure Shell
-This section describes how to import, configure and modify Cisco ACI EPG Autoload Shell 2G
-
-### Importing the Shell into CloudShell
-Use the following procedure to import the downloaded Shell:
-
-**To import the Shell into CloudShell:**
-  1. Download the Shell from the Quali Download Center.
-  2. Backup your database.
-  3. Log in to CloudShell Portal as administrator of the relevant domain.
-  4. In the User menu select Import Package
-  5. Browse to the location of the downloaded Shell file, select the relevant .zip file and Click Open. Alternatively, drag   the shell’s .zip file into CloudShell Portal.
-
-### Offline installation of a Shell
-___
-**Note:** Offline installation instructions are relevant only if Cloudshell Execution Server has no access to PyPi. You can skip this section if your execution server has access to Pypi.
-___
-Cisco ACI EPG Autoload Shell 2G uses a variety of Python packages. To work in offline mode:
-  1. Download the cisco-aci-epg-autoload-offline-dependecies.zip file (see "Downloading the Shell" section).
-  2. Unzip it into the "C:\Program Files (x86)\QualiSystems\CloudShell\Server\Config\Pypi Server Repository" folder
-  3. Restart Execution Server.
+**Note:** If your CloudShell version does not support this shell, you should consider upgrading to a later version of CloudShell or contact customer support.
 
 ### Data Model
-Cisco ACI EPG Autoload Shell 2G Families and Models
 
-|Family |Model|
-|---|---|
-|`CS_CiscoACIController`|`Cisco ACI EPG Controller`|
-|`CS_CiscoACITenant`|`Cisco ACI EPG Controller.CiscoACITenant`|
-|`CS_CiscoACIAppProfile`|`Cisco ACI EPG Controller.CiscoACIAppProfile`|
-|`CS_CiscoACIEndPointGroup`|`Cisco ACI EPG Controller.CiscoACIEndPointGroup`|
+The shell's data model includes all shell metadata, families, and attributes.
+
+#### **Cisco ACI EPG Autoload 2G Shell Families and Models**
+
+The Cisco ACI EPG families and models are listed in the following table:
+
+|Family|Model|Description|
+|:---|:---|:---|
+|CS_CiscoACIController|Cisco ACI EPG Controller|Generic Cisco ACI EPG 2 Generation |
+|CS_CiscoACITenant|CiscoACITenant|Tenats added to the controller|
+|CS_CiscoACIAppProfile|CiscoACIAppProfile|Application Profiles creatred in Tenants|
+|CS_CiscoACIEndPointGroup|CiscoACIEndPointGroup|EndPoint Groups created in Application Profiles |
+
+#### **Cisco ACI EPG Autoload 2G Shell Attributes**
+
+The attribute names and types are listed in the following section of the Cisco ACI Standard:
+
+https://github.com/QualiSystems/cloudshell-standards/blob/master/Documentation/networking_standard.md#attributes
+
+### Automation
+This section describes the automation (drivers) associated with the data model. The shell’s driver is provided as part of the shell package. There are two types of automation processes, Autoload and Resource.  Autoload is executed when creating the resource in the **Inventory** dashboard, while resource commands are run in the sandbox.
+
+The following resource commands are available on the **Cisco ACI EPG Autoload 2G** shell:
+
+* Create ACI Resources
+* Remove ACI Resources
+
+# Downloading the Shell
+The **Cisco ACI EPG Autoload 2G** shell is available from the [Quali Community Integrations](https://community.quali.com/integrations) page. 
+
+Download the files into a temporary location on your local machine. 
+
+The shell comprises:
+
+|File name|Description|
+|:---|:---|
+|CiscoAciEpgAutoload.zip|Cisco ACI EPG Autoload shell package|
+|cisco-aci-epg-autoload-offline-dependecies-1.0.0.zip|Shell Python dependencies (for offline deployments only)|
+
+# Importing and Configuring the Shell
+This section describes how to import the **Cisco ACI EPG Autoload 2G** shell and configure and modify the shell’s devices.
+
+### Importing the shell into CloudShell
+
+**To import the shell into CloudShell:**
+  1. Make sure you have the shell’s zip package. If not, download the shell from the [Quali Community's Integrations](https://community.quali.com/integrations) page.
+  
+  2. In CloudShell Portal, as Global administrator, open the **Manage – Shells** page.
+  
+  3. Click **Import**.
+  
+  4. In the dialog box, navigate to the shell's zip package, select it and click **Open**.
+
+The shell is displayed in the **Shells** page and can be used by domain administrators in all CloudShell domains to create new inventory resources, as explained in [Adding Inventory Resources](http://help.quali.com/Online%20Help/9.0/Portal/Content/CSP/INVN/Add-Rsrc-Tmplt.htm?Highlight=adding%20inventory%20resources). 
+
+### Offline installation of a shell
+
+**Note:** Offline installation instructions are relevant only if CloudShell Execution Server has no access to PyPi. You can skip this section if your execution server has access to PyPi. For additional information, see the online help topic on offline dependencies.
+
+In offline mode, import the shell into CloudShell and place any dependencies in the appropriate dependencies folder. The dependencies folder may differ, depending on the CloudShell version you are using:
+
+* For CloudShell version 8.3 and above, see [Adding Shell and script packages to the local PyPi Server repository](#adding-shell-and-script-packages-to-the-local-pypi-server-repository).
+
+* For CloudShell version 8.2, perform the appropriate procedure: [Adding Shell and script packages to the local PyPi Server repository](#adding-shell-and-script-packages-to-the-local-pypi-server-repository) or [Setting the python pythonOfflineRepositoryPath configuration key](#setting-the-python-pythonofflinerepositorypath-configuration-key).
+
+* For CloudShell versions prior to 8.2, see [Setting the python pythonOfflineRepositoryPath configuration key](#setting-the-python-pythonofflinerepositorypath-configuration-key).
+
+### Adding shell and script packages to the local PyPi Server repository
+If your Quali Server and/or execution servers work offline, you will need to copy all required Python packages, including the out-of-the-box ones, to the PyPi Server's repository on the Quali Server computer (by default *C:\Program Files (x86)\QualiSystems\CloudShell\Server\Config\Pypi Server Repository*).
+
+For more information, see [Configuring CloudShell to Execute Python Commands in Offline Mode](http://help.quali.com/Online%20Help/9.0/Portal/Content/Admn/Cnfgr-Pyth-Env-Wrk-Offln.htm?Highlight=Configuring%20CloudShell%20to%20Execute%20Python%20Commands%20in%20Offline%20Mode).
+
+**To add Python packages to the local PyPi Server repository:**
+  1. If you haven't created and configured the local PyPi Server repository to work with the execution server, perform the steps in [Add Python packages to the local PyPi Server repository (offline mode)](http://help.quali.com/Online%20Help/9.0/Portal/Content/Admn/Cnfgr-Pyth-Env-Wrk-Offln.htm?Highlight=offline%20dependencies#Add). 
+  
+  2. For each shell or script you add into CloudShell, do one of the following (from an online computer):
+      * Connect to the Internet and download each dependency specified in the *requirements.txt* file with the following command: 
+`pip download -r requirements.txt`. 
+     The shell or script's requirements are downloaded as zip files.
+
+      * In the [Quali Community's Integrations](https://community.quali.com/integrations) page, locate the shell and click the shell's **Download** link. In the page that is displayed, from the Downloads area, extract the dependencies package zip file.
+
+3. Place these zip files in the local PyPi Server repository.
+ 
+### Setting the python PythonOfflineRepositoryPath configuration key
+Before PyPi Server was introduced as CloudShell’s python package management mechanism, the `PythonOfflineRepositoryPath` key was used to set the default offline package repository on the Quali Server machine, and could be used on specific Execution Server machines to set a different folder. 
+
+**To set the offline python repository:**
+1. Download the *cisco-aci-epg-autoload-offline-dependecies.zip* file, see [Downloading the Shell](#downloading-the-shell).
+
+2. Unzip it to a local repository. Make sure the execution server has access to this folder. 
+
+3.  On the Quali Server machine, in the *~\CloudShell\Server\customer.config* file, add the following key to specify the path to the default python package folder (for all Execution Servers):  
+	`<add key="PythonOfflineRepositoryPath" value="repository 
+full path"/>`
+
+4. If you want to override the default folder for a specific Execution Server, on the Execution Server machine, in the *~TestShell\Execution Server\customer.config* file, add the following key:  
+	`<add key="PythonOfflineRepositoryPath" value="repository 
+full path"/>`
+
+5. Restart the Execution Server.
+
+### Configuring a new resource
+This section explains how to create a new resource from the shell.
+
+In CloudShell, the component that models the device is called a resource. It is based on the shell that models the device and allows the CloudShell user and API to remotely control the device from CloudShell.
+
+You can also modify existing resources, see [Managing Resources in the Inventory](http://help.quali.com/Online%20Help/9.0/Portal/Content/CSP/INVN/Mng-Rsrc-in-Invnt.htm?Highlight=managing%20resources).
+
+**To create a resource for the device:**
+  1. In the CloudShell Portal, in the **Inventory** dashboard, click **Add New**. 
+     ![](https://github.com/QualiSystems/cloudshell-shells-documentaion-templates/blob/master/create_a_resource_device.png)
+     
+  2. From the list, select **Cisco ACI EPG Autoload 2G**.
+  
+  3. Enter the **Name** and **IP address** of the **Cisco ACI Controller**.
+  
+  4. Click **Create**.
+  
+  5. In the **Resource** dialog box, enter the device's settings, see [Cisco ACI EPG Autoload 2G Shell Attributes](#cisco-aci-epg-autoload-2g-shell-attributes).
+  
+  6. Click **Continue**.
+
+CloudShell validates the device’s settings and updates the new resource with the device’s structure.
+
+# Updating Python Dependencies for Shells
+This section explains how to update your Python dependencies folder. This is required when you upgrade a shell that uses new/updated dependencies. It applies to both online and offline dependencies.
+
+### Updating offline Python dependencies
+**To update offline Python dependencies:**
+1. Download the latest Python dependencies package zip file locally.
+
+2. Extract the zip file to the suitable offline package folder(s). 
+
+3. Terminate the shell’s instance, as explained [here](http://help.quali.com/Online%20Help/9.0/Portal/Content/CSP/MNG/Mng-Exctn-Srv-Exct.htm#Terminat). 
+
+### Updating online Python dependencies
+In online mode, the execution server automatically downloads and extracts the appropriate dependencies file to the online Python dependencies repository every time a new instance of the driver or script is created.
+
+**To update online Python dependencies:**
+* If there is a live instance of the shell's driver or script, terminate the shell’s instance, as explained [here](http://help.quali.com/Online%20Help/9.0/Portal/Content/CSP/MNG/Mng-Exctn-Srv-Exct.htm#Terminat). If an instance does not exist, the execution server will download the Python dependencies the next time a command of the driver or script runs.
+
+# Typical Workflows 
+TBD
+
+# References
+To download and share integrations, see [Quali Community's Integrations](https://community.quali.com/integrations). 
+
+For instructional training and documentation, see [Quali University](https://www.quali.com/university/).
+
+To suggest an idea for the product, see [Quali's Idea box](https://community.quali.com/ideabox). 
+
+To connect with Quali users and experts from around the world, ask questions and discuss issues, see [Quali's Community forums](https://community.quali.com/forums). 
+
+# Release Notes 
+
+For release updates, see the shell's [GitHub releases page](https://github.com/QualiSystems/TeraVM-Controller-Shell-2G/releases).
+
