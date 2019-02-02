@@ -212,25 +212,27 @@ In online mode, the execution server automatically downloads and extracts the ap
 Command will remove all ACI resources created earlier in the current reservation
 
 #### **Workflow 3** - *Add Cisco ACI Port to the EndPointGroup*
-1. Create physical connection between Cisco ACI Port and some DUT/Switch  
-    1. In Resource Manager, open the **Cisco ACI Ports Autoload** resource in the **Resource Explorer** tab
-    1. Open **Configuration** menu and click on the **Connections** tab 
-    2. Connect Cisco ACI Port to some DUT/Switch [connection image]:
+1. Create a physical connection between the Cisco ACI Port and some DUT/Switch
+    1. In the Resource Manager, open the **Cisco ACI Ports Autoload** resource in the **Resource Explorer** tab
+    1. Open the **Configuration** menu and click on the **Connections** tab
+    2. Connect Cisco ACI Port to some DUT/Switch:
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![](https://github.com/QualiSystems/Cisco-ACI-EPG-Autoload-Shell-2G/blob/master/docs/images/cisco_aci_port_to_dut_phys_connection.png)
     3. Save changes
 
-2. In CloudShell Portal, add the **Cisco ACI EPG Autoload** and DUT/Switch (where you connected Cisco ACI Ports) resources to your blueprint.
+2. In the CloudShell Portal, add the **Cisco ACI EPG Autoload** and DUT/Switch (where you connected Cisco ACI Ports) resources to your blueprint.
 
 3. In the blueprint toolbar, click App/Service>Networking and drag the VLAN AUTO service into the diagram.
 
-[reservation image with 3 resources]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![](https://github.com/QualiSystems/Cisco-ACI-EPG-Autoload-Shell-2G/blob/master/docs/images/reservation_with_cisco_aci_epg_dut_and_vlan_service.jpeg)
 
-4. Create a connector between DUT/Switch port (which was connected earlier to the Cisco ACI Port) and Cisco ACI EPG Autoload resource.
-[connetcot image 1]
+4. Create a connector between DUT/Switch port (which was connected earlier to the Cisco ACI Port) and Cisco ACI EPG
+Autoload resource. Select the EndPoint Group you want to associate with the Cisco ACI Port.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![](https://github.com/QualiSystems/Cisco-ACI-EPG-Autoload-Shell-2G/blob/master/docs/images/cisco_aci_epg_dut_connector.jpeg)
 
-5. Create a connector between DUT/Switch port and VLAN AUTO Service.
-[connetcot image 2]
+5. Create a connector between DUT/Switch port and VLAN Auto Service.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![](https://github.com/QualiSystems/Cisco-ACI-EPG-Autoload-Shell-2G/blob/master/docs/images/cisco_aci_epg_vlan_service_connector.jpeg)
 
-[image with 2 connectors]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![](https://github.com/QualiSystems/Cisco-ACI-EPG-Autoload-Shell-2G/blob/master/docs/images/reservation_with_cisco_aci_epg_dut_and_vlan_service_with_connectors.jpeg)
 
 4. Reserve the blueprint.
 
