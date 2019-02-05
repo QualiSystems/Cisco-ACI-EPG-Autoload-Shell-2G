@@ -60,9 +60,29 @@ The Cisco ACI EPG families and models are listed in the following table:
 
 #### **Cisco ACI EPG Autoload 2G Shell Attributes**
 
-The attribute names and types are listed in the following section of the Cisco ACI Standard:
+#### Cisco ACI EPG Controller
+Attribute Name | Data Type | User input? | Description | Family Attribute?
+--- | --- | --- | --- | ---
+User | String | Yes | | No
+Password | Password | Yes | | No
+Model Name | String | No | The Controller model/vendor in a readable format (used by the GUI for display). This information is typically used for abstract resource filtering. | Yes
+Controller TCP Port | Integer | Yes |  default is 443. | No
+Scheme | String | Yes | two options: HTTP, HTTPS | No
 
-https://github.com/QualiSystems/cloudshell-standards/blob/master/Documentation/networking_standard.md#attributes
+#### Cisco ACI Tenant
+Attribute Name | Data Type | User input? | Description | Family Attribute?
+--- | --- | --- | --- | ---
+ACI Name | String | Yes | Tenant name on the ACI Controller | No
+
+#### Cisco ACI App Profile
+Attribute Name | Data Type | User input? | Description | Family Attribute?
+--- | --- | --- | --- | ---
+ACI Name | String | Yes | Application Profile name on the ACI Controller | No
+
+#### Cisco ACI EndPoint Group
+Attribute Name | Data Type | User input? | Description | Family Attribute?
+--- | --- | --- | --- | ---
+ACI Name | String | Yes | EndPoint Group name on the ACI Controller | No
 
 ### Automation
 This section describes the automation (drivers) associated with the data model. The shell’s driver is provided as part of the shell package. There are two types of automation processes, Autoload and Resource.  Autoload is executed when creating the resource in the **Inventory** dashboard, while resource commands are run in the sandbox.
