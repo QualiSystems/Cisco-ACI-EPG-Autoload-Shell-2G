@@ -31,7 +31,7 @@ The **Cisco ACI EPG Autoload 2G** shell provides you with connectivity and manag
 For more information on the **Cisco ACI**, see the official **Cisco** product documentation.
 
 ### Standard version
-**Cisco ACI EPG Autoload 2G Shell** is based on the Cloudshell Cisco ACI Standard version **1.0.0**.
+The **Cisco ACI EPG Autoload 2G** shell is based on the Cloudshell Cisco ACI Standard version **1.0.0**.
 
 ### Requirements
 
@@ -54,9 +54,9 @@ The Cisco ACI EPG families and models are listed in the following table:
 |Family|Model|Description|
 |:---|:---|:---|
 |CS_CiscoACIController|Cisco ACI EPG Controller|Generic Cisco ACI EPG Controller 2 Generation |
-|CS_CiscoACITenant|CiscoACITenant|Tenats created on the Controller|
-|CS_CiscoACIAppProfile|CiscoACIAppProfile|Application Profiles creatred in Tenants|
-|CS_CiscoACIEndPointGroup|CiscoACIEndPointGroup|EndPoint Groups created in Application Profiles |
+|CS_CiscoACITenant|CiscoACITenant|Tenants created on the Controller|
+|CS_CiscoACIAppProfile|CiscoACIAppProfile|Application Profiles created in the Tenants|
+|CS_CiscoACIEndPointGroup|CiscoACIEndPointGroup|EndPoint Groups created in the Application Profiles |
 
 #### **Cisco ACI EPG Autoload 2G Shell Attributes**
 
@@ -66,8 +66,8 @@ Attribute Name | Data Type | User input? | Description | Family Attribute?
 User | String | Yes | | No
 Password | Password | Yes | | No
 Model Name | String | No | The Controller model/vendor in a readable format (used by the GUI for display). This information is typically used for abstract resource filtering. | Yes
-Controller TCP Port | Integer | Yes |  default is 443. | No
-Scheme | String | Yes | two options: HTTP, HTTPS | No
+Controller TCP Port | Integer | Yes |  Default is 443. | No
+Scheme | String | Yes | Options include: HTTP, HTTPS | No
 
 #### Cisco ACI Tenant
 Attribute Name | Data Type | User input? | Description | Family Attribute?
@@ -212,44 +212,43 @@ In online mode, the execution server automatically downloads and extracts the ap
 #### **Workflow 1** - *Create ACI Resources* 
 1. In CloudShell Portal, add the **Cisco ACI EPG Autoload** resource to your blueprint and reserve the blueprint.
 
-2. Run the **Create ACI Resources** resource command.
+2. Hover over the resource, select the **Commands** option from the context menu and run the **Create ACI Resources** command.
 
 3. In the command inputs field, enter the following information:
-	* **Tenant Name**: Name of the Tenant where ACI resources will be created.
-	* **Application Profile Name**: Name of the Application Profile that will be created on the Cisco ACI Controller.
-	* **EndPoint Group Name**: Name of the EndPoint Group that will be created on the Cisco ACI Controller.
-	* **Bridge Domain Name**: Name of the Bridge Domain that will be created on the Cisco ACI Controller.
-	* **Bridge Domain IP Address**: IP Address that will be added to Bridge Domain.
-	* **Bridge Domain Mask**: Subnet Mask that will be added to Bridge Domain..
+	* **Tenant Name**: Name of the Tenant where the ACI resources will be created.
+	* **Application Profile Name**: Name of the Application Profile to be created on the Cisco ACI Controller.
+	* **EndPoint Group Name**: Name of the EndPoint Group to be created on the Cisco ACI Controller.
+	* **Bridge Domain Name**: Name of the Bridge Domain to be created on the Cisco ACI Controller.
+	* **Bridge Domain IP Address**: IP Address to be added to the Bridge Domain.
+	* **Bridge Domain Mask**: Subnet Mask to be added to the Bridge Domain.
 	
 4. Click **Run**.
 
 #### **Workflow 2** - *Remove ACI Resources* 
 1. In CloudShell Portal, add the **Cisco ACI EPG Autoload** resource to your blueprint and reserve the blueprint.
 
-2. Run the **Resource ACI Resources** resource command.
+2. Hover over the resource, select the **Commands** option from the context menu and run the **Remove ACI Resources** command.
 
-Command will remove all ACI resources created earlier in the current reservation
+This removes all ACI resources created earlier in the current reservation.
 
 #### **Workflow 3** - *Add Cisco ACI Port to the EndPointGroup*
-1. Create a physical connection between the Cisco ACI Port and some DUT/Switch
-    1. In the Resource Manager, open the **Cisco ACI Ports Autoload** resource in the **Resource Explorer** tab
-    1. Open the **Configuration** menu and click on the **Connections** tab
-    2. Connect Cisco ACI Port to some DUT/Switch:
+1. Create a physical connection between the Cisco ACI Port and some DUT/Switch.
+    1. In Resource Manager, **Resource Explorer** pane, open the **Cisco ACI Ports Autoload** resource.
+    1. Right-click the resource, select **Configuration** from the context menu and click on the **Connections** button at the bottom of the **Resource Configuration** page.
+    2. Connect the Cisco ACI Port to some DUT/Switch:
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![](https://github.com/QualiSystems/Cisco-ACI-EPG-Autoload-Shell-2G/blob/master/docs/images/cisco_aci_port_to_dut_phys_connection.png)
-    3. Save changes
+    3. Save your changes
 
-2. In the CloudShell Portal, add the **Cisco ACI EPG Autoload** and DUT/Switch (where you connected Cisco ACI Ports) resources to your blueprint.
+2. In CloudShell Portal, add the **Cisco ACI EPG Autoload** resource and the DUT/Switch resource (where you connected the Cisco ACI Ports) to your blueprint.
 
-3. In the blueprint toolbar, click App/Service>Networking and drag the VLAN AUTO service into the diagram.
+3. In the diagram view of the blueprint toolbar, click **App/Service>Networking** and drag the **VLAN AUTO** service into the diagram.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![](https://github.com/QualiSystems/Cisco-ACI-EPG-Autoload-Shell-2G/blob/master/docs/images/reservation_with_cisco_aci_epg_dut_and_vlan_service.jpeg)
 
-4. Create a connector between DUT/Switch port (which was connected earlier to the Cisco ACI Port) and Cisco ACI EPG
-Autoload resource. Select the EndPoint Group you want to associate with the Cisco ACI Port.
+4. Create a connection between the DUT/Switch port (which you connected earlier to the Cisco ACI Port) and the **Cisco ACI EPG Autoload** resource. Select the EndPoint Group you want to associate with the Cisco ACI Port.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![](https://github.com/QualiSystems/Cisco-ACI-EPG-Autoload-Shell-2G/blob/master/docs/images/cisco_aci_epg_dut_connector.jpeg)
 
-5. Create a connector between DUT/Switch port and VLAN Auto Service.
+5. Create a connection between the DUT/Switch port and the VLAN Auto Service.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![](https://github.com/QualiSystems/Cisco-ACI-EPG-Autoload-Shell-2G/blob/master/docs/images/cisco_aci_epg_vlan_service_connector.jpeg)
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![](https://github.com/QualiSystems/Cisco-ACI-EPG-Autoload-Shell-2G/blob/master/docs/images/reservation_with_cisco_aci_epg_dut_and_vlan_service_with_connectors.jpeg)
