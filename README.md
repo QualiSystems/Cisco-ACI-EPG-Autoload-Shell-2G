@@ -37,7 +37,7 @@ The **Cisco ACI EPG Autoload 2G** shell is based on the Cloudshell Cisco ACI Sta
 
 Release: **Cisco ACI EPG Autoload 2G Shell**
 
-▪ CloudShell version: 8.0 and above
+▪ CloudShell version: 8.3 Patch 3, 9.0 Patch 2, 9.1 GA and above
 
 ▪ Cisco ACI version: 3.0 and above
 
